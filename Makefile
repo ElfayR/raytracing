@@ -4,9 +4,16 @@ all: $(EXEC)
 
 CC ?= gcc
 CFLAGS = \
-	-std=gnu99 -Wall -O0 -g
+	-std=gnu99 -Wall -Ofast -g
 LDFLAGS = \
 	-lm
+
+ifeq ($(strip $(OPENMP)),1)
+OPENMP_FLAGS = -fopenmp
+CFLAGS += $(OPENMP_FLAGS)
+LDFLAGS += $(OPENMP_FLAGS)
+#export OMP_NUM_THREADS=2
+endif
 
 ifeq ($(strip $(PROFILE)),1)
 PROF_FLAGS = -pg
